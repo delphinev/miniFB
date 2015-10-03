@@ -1,0 +1,13 @@
+<h1><%= @user.name %></h1>
+
+<h2>Write something</h2>
+<%= form_tag "#{@user.id}/post", method: "post" do %>
+  <textarea name="content" row="5"></textarea>
+<% end %>
+
+<h3><%= @user.name%> 's wall</h3>
+<% @user.posts.each do |post| %>
+  <div>
+    <p> <%= post.content %></p>
+  </div>
+<% end %>
