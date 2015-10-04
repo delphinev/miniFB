@@ -1,20 +1,42 @@
-<h1><%= @user.name %></h1>
-<h2><%= @user.name %> 's friends </h2>
-<ul>
-  <% @user.friends.each do |friend| %>
-    <li><%= friend.name %></li>
-  <% end %>
-</ul>
-<h2>Write something</h2>
-<%= form_tag "/users/#{@user.id}", method: "post" do %>
-  <textarea name="content" row="5"></textarea>
-  <input type="submit" value="Submit"/>
-<% end %>
-
-<h3><%= @user.name%> 's wall</h3>
-<% @posts.each do |post| %>
-  <div>
-    <h4><%= post.user.name %> said: </h4>
-    <p> <%= post.content %></p>
+<div class="row profile_title">
+  <div class="medium-4 medium-offset-4 medium-centered columns">
+    <h1 class="text-center"><%= @user.name %></h1>
   </div>
-<% end %>
+</div>
+<div class="row">
+  <div class="medium-8 columns">
+    <h4>What's up?</h4>
+    <%= form_tag "/users/#{@user.id}", method: "post" do %>
+      <fieldset>
+        <legend>Write something</legend>
+        <textarea name="content" row="5"></textarea>
+        <input type="submit" class="button small" value="Submit"/>
+      </fieldset>
+    <% end %>
+  </div>
+  <div class="medium-4 columns">
+    <fieldset>
+      <h4>Friends </h4>
+      <ul>
+        <% @user.friends.each do |friend| %>
+          <li><a href="/users/<%=friend.id%>"><%= friend.name %></a></li>
+        <% end %>
+      </ul>
+      <%= form_tag "#", method: "post" do %>
+        <input type="submit" class="button secondary small" value="Add me" />
+      <% end %>
+    </fieldset>
+  </div>
+</div>
+<div class="row wall">
+  <div class="medium-12 columns">
+    <h4><%= @user.name%> 's wall</h4>
+    <% @posts.each do |post| %>
+      <div class="panel">
+        <blockquote>
+          <%= post.content %><cite><%= post.user.name %></cite>
+        </blockquote>
+      </div>
+    <% end %>
+  </div>
+</div>
