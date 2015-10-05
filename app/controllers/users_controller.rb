@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   #autocomplete :user, :email, :full => true
 
   def homepage
+    @posts = Post.personal(current_user.id)
   end
 
   def start

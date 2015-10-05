@@ -1,3 +1,15 @@
 <h1>Welcome <%= current_user.name %></h1>
+<div class="row wall">
+  <div class="medium-12 columns">
+    <h4>My posts and my friend's posts</h4>
+    <% @posts.each do |post| %>
+      <div class="panel">
+        <blockquote>
+          <%= post.content %><cite><%= post.user.name %></cite>
+        </blockquote>
+      </div>
+    <% end %>
+  </div>
+</div>
 
 <%=link_to 'sign out',destroy_user_session_path ,method: "delete"%>
