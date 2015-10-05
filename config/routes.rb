@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   get 'users' => "users#index"
   get 'users/:id' => "users#show"
   post 'users/:id' => "users#create"
+  post 'users/:id/add' => "users#befriend"
+  delete 'users/:id/delete' => "users#unfriend"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

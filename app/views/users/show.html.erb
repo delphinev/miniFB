@@ -22,8 +22,14 @@
           <li><a href="/users/<%=friend.id%>"><%= friend.name %></a></li>
         <% end %>
       </ul>
-      <%= form_tag "#", method: "post" do %>
-        <input type="submit" class="button secondary small" value="Add me" />
+      <% if @we_are_friends == 1 %>
+        <%= form_tag "/users/#{@user.id}/delete", method: "delete" do %>
+          <input type="submit" class="button alert small" value="Remove" />
+        <% end %>
+      <% else %>
+        <%= form_tag "/users/#{@user.id}/add", method: "post" do %>
+          <input type="submit" class="button secondary small" value="Add me" />
+        <% end %>
       <% end %>
     </fieldset>
   </div>

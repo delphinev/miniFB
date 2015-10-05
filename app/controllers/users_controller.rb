@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  autocomplete :user, :email, :full => true
+  #autocomplete :user, :email, :full => true
 
   def homepage
   end
@@ -20,6 +20,12 @@ class UsersController < ApplicationController
   def show
   	@user= User.find(params[:id])
     @posts = Post.where(friend_id: @user.id)
+    @my_friends = User.where(id: current_user.friendships.map{|v| [v.friend_id]})
+    @my_friends.each do |f|
+      if f.id == @user.id
+        @we_are_friends = 1
+      end
+    end
   end
 
   def create
@@ -30,5 +36,20 @@ class UsersController < ApplicationController
       @post.friend_id = @user.id
     @post.save
     redirect_to "/users/#{@user.id}"
+  end
+
+  def befriend
+    @user = User.find(params[:id])
+    friendship = Friendship.new
+      friendship.user_id = current_user.id
+      friendship.friend_id = @user.id
+    friendship.save
+    redirect_to "/users/#{@user.id}"
+  end
+
+  def unfriend
+    @user = User.find(params[:id]).friendships.where(friend_id: current_user.id)
+    @user.first.destroy
+    redirect_to "/users/#{current_user.id}"
   end
 end
