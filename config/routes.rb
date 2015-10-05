@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  root "users#start"
+  devise_for :users, :controllers => { registrations: 'registrations'}
+  get 'homepage' => "users#homepage"
+  get 'users' => "users#index"
+  get 'users/:id' => "users#show"
+  post 'users/:id' => "users#create"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
