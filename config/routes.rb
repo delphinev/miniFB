@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   post 'users/:id' => "users#create"
   post 'users/:id/add' => "users#befriend"
   delete 'users/:id/delete' => "users#unfriend"
+  post 'search' => "searches#search"
+  get 'search/:find' => "searches#result_search"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

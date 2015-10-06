@@ -9,6 +9,18 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+    <% if current_user %>
+        <%= form_tag "/search", method: :post do %>
+            <div class="row">
+                 <div class="large-4 columns">
+                    <input type="text" name="search" placeholder="search user by email"/>
+                </div>
+                <div class="large-8 columns">
+                    <input type="submit" value="search" />
+                </div>
+            </div>
+        <% end %>
+    <% end %>
 
 <%= yield %>
 
