@@ -9,18 +9,54 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<nav class="top-bar" data-topbar role="navigation">
+  <ul class="title-area">
+    <li class="name">
+      <h1><a href="#">Mini Facebook</a></h1>
+    </li>
+     <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+  </ul>
+
+  <section class="top-bar-section">
     <% if current_user %>
         <%= form_tag "/search", method: :post do %>
-            <div class="row">
-                 <div class="large-4 columns">
+          <nav class="top-bar" data-topbar role="navigation">
+            <ul class="title-area">
+              <li class="name">
+                <h1><a href="#">Mini Facebook</a></h1>
+             </li>
+     <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+            <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+          </ul>
+
+          <li class="has-form">
+               <div class="row collapse">
+                  <div class="large-8 small-9 columns">
                     <input type="text" name="search" placeholder="search user by email"/>
-                </div>
-                <div class="large-8 columns">
-                    <input type="submit" value="search" />
-                </div>
-            </div>
-        <% end %>
-    <% end %>
+                  </div>
+                  <div class="large-4 small-3 columns">
+                    <input class="alert button expand" type="submit" value="search" />
+                  </div>
+               </div>
+          </li>
+      <% end %>
+  <% end %>
+
+    <!-- Right Nav Section -->
+    <ul class="right">
+      <li class="active"><a href="#">Login</a></li>
+      <li class="active"><a href="#">Logout</a></li>
+    </ul>
+
+    <!-- Left Nav Section -->
+  </section>
+</nav>
+
+
+
+
+
 
 <%= yield %>
 
