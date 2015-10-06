@@ -29,6 +29,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def friends
+    @user= User.find(params[:id])
+    render :json => @user.friends.to_json
+  end
+
   def create
     @user = User.find(params[:id])
     @post = Post.new
@@ -45,12 +50,14 @@ class UsersController < ApplicationController
       friendship.user_id = current_user.id
       friendship.friend_id = @user.id
     friendship.save
-    redirect_to "/users/#{@user.id}"
+    #redirect_to "/users/#{@user.id}"
+    render :nothing => true, :status => 200
   end
 
   def unfriend
     @user = User.find(params[:id]).friendships.where(friend_id: current_user.id)
     @user.first.destroy
-    redirect_to "/users/#{current_user.id}"
+    #redirect_to "/users/#{current_user.id}"
+    render :nothing => true, :status => 200
   end
 end

@@ -1,5 +1,10 @@
 <%= flash[:error]%>
 <h1>Welcome <%= current_user.name %></h1>
+<div class="row home">
+  <div class="medium-8 medium-offset-2 columns">
+    <h1 class="text-center">Welcome <a href="/users/<%= current_user.id %>"><%= current_user.name %></a></h1>
+  </div>
+</div>
 <div class="row wall">
   <div class="medium-12 columns">
     <h4>My posts and my friend's posts</h4>
