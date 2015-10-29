@@ -1,9 +1,19 @@
 Rails.application.routes.draw do
-  root "users#start"
-  devise_for :users, :controllers => { registrations: 'registrations'}
+    root "users#start"
+    devise_for :users, :controllers => { registrations: 'registrations'}
+
+ #resources :users do
+  #   member do
+   #     get :confirm_email
+    # end
+ #end
+   
+   
+    get 'test' => "users#test"
   get 'homepage' => "users#homepage"
   get 'users' => "users#index"
-  get 'users/:id' => "users#show"
+  get 'users/autocomplete_user_name'
+  get 'users/:id' => "users#show", as: 'user'
   post 'users/:id' => "users#create"
   post 'users/:id/add' => "users#befriend"
   delete 'users/:id/delete' => "users#unfriend"

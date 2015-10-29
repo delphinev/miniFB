@@ -45,7 +45,7 @@ Rails.application.configure do
     :enable_starttls_auto => true,
     :address => ENV["address"],
     :port => ENV["port"],
-    :domain => ENV["domain"],
+    #:domain => ENV["domain"],
     :authentication => :login,
     :user_name => ENV["username"],
     :password => ENV["password"],

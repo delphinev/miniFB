@@ -1,17 +1,29 @@
 class UsersController < ApplicationController
 
-  #autocomplete :user, :email, :full => true
+    before_action :authenticate_user!
+    autocomplete :user, :name, :display_value => :display, :extra_data => [:email]
 
+
+def test
+    @user=User.where(email:  params[:name]).first
+    if @user == nil
+        redirect_to :back
+    else
+        redirect_to user_path(@user)
+    end
+end  
+    
   def homepage
     @posts = Post.personal(current_user.id)
   end
 
-  def start
-    if current_user
-      redirect_to '/homepage'
-    else
-      redirect_to new_user_session_path
-    end
+ def start
+      if user_signed_in?
+          redirect_to "/homepage"
+          #redirect_to new_user_registration_path
+      else
+        redirect_to new_user_session_path
+      end
   end
 
   def index
@@ -19,6 +31,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    #@autocomplete=User.find(params[:name]).first
   	@user= User.find(params[:id])
     @posts = Post.where(friend_id: @user.id)
     @my_friends = User.where(id: current_user.friendships.map{|v| [v.friend_id]})
@@ -36,6 +49,15 @@ class UsersController < ApplicationController
 
   def create
     @user = User.find(params[:id])
+    if @user.save
+        UserMailer.registration_confirmation(@user).deliver
+        flash[:success] = "Please confirm your email address to continue"
+        redirect_to root_url
+    else
+        flash[:error] = "Ooooppss, something went wrong!"
+        render 'new'
+    end
+
     @post = Post.new
       @post.content = params[:content]
       @post.user_id = current_user.id
@@ -43,6 +65,19 @@ class UsersController < ApplicationController
     @post.save
     redirect_to "/users/#{@user.id}"
   end
+  
+    def confirm_email
+        user = User.find_by_confirm_token(params[:id])
+        if user
+            user.email_activate
+            flash[:success] = "Welcome to the Sample App! Your email has been confirmed.
+            Please sign in to continue."
+            redirect_to signin_url
+        else
+            flash[:error] = "Sorry. User does not exist"
+            redirect_to root_url
+        end
+      end
 
   def befriend
     @user = User.find(params[:id])
